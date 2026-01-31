@@ -12,7 +12,7 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         retro: {
-          orange: "#ff6b35",
+          orange: "#fbcf52",
           yellow: "#f7c59f",
           blue: "#004e89",
           cream: "#efead8",

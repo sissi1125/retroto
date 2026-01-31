@@ -3,19 +3,25 @@
 import { motion } from "framer-motion";
 import { Camera, Calendar, Share2, Shield } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <main className="flex min-h-screen flex-col items-center">
       {/* Header */}
       <nav className="w-full max-w-7xl flex justify-between items-center p-6 bg-transparent">
         <div className="text-2xl font-bold text-retro-blue">Retroto</div>
         <div className="flex gap-6 items-center">
-          <Link href="#features" className="hover:text-retro-orange transition-colors">功能</Link>
-          <Link href="/privacy" className="hover:text-retro-orange transition-colors">隐私</Link>
-          <button className="bg-retro-orange text-white px-4 py-2 rounded-full font-medium hover:bg-opacity-90 transition-all">
-            立即开始
-          </button>
+          <Link href="#features" className="hover:text-retro-orange transition-colors hidden md:block">{t.common.features}</Link>
+          <Link href="/privacy" className="hover:text-retro-orange transition-colors hidden md:block">{t.common.privacy}</Link>
+          <Link href="/support" className="hover:text-retro-orange transition-colors hidden md:block">{t.common.support}</Link>
+          <LanguageSwitcher />
+          {/* <button className="bg-retro-orange text-white px-4 py-2 rounded-full font-medium hover:bg-opacity-90 transition-all">
+            {t.common.start}
+          </button> */}
         </div>
       </nav>
 
@@ -24,9 +30,13 @@ export default function Home() {
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-5xl md:text-7xl font-bold mb-6 text-retro-dark"
+          className="text-5xl md:text-7xl font-bold mb-6 text-retro-dark whitespace-pre-line"
         >
-          让记忆重现，<br />让照片说话
+          {t.home.heroTitle.includes('，') ? (
+            <>
+              {t.home.heroTitle.split('，')[0]}，<br />{t.home.heroTitle.split('，')[1]}
+            </>
+          ) : t.home.heroTitle}
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -34,8 +44,7 @@ export default function Home() {
           transition={{ delay: 0.1 }}
           className="text-xl text-zinc-600 mb-10 max-w-2xl"
         >
-          Retroto 是一款专注于照片时间线回顾与整理的应用。
-          通过智能整理，带您重温生命中那些被遗忘的美好瞬间。
+          {t.home.heroSubtitle}
         </motion.p>
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
@@ -43,9 +52,9 @@ export default function Home() {
           transition={{ delay: 0.2 }}
           className="relative w-full aspect-video bg-retro-yellow rounded-3xl overflow-hidden shadow-2xl flex items-center justify-center"
         >
-          <div className="text-retro-dark font-medium flex flex-col items-center">
+          <div className="text-retro-dark font-medium flex flex-col items-center p-6">
              <Camera size={48} className="mb-4 text-retro-orange" />
-             <p>这里将展示产品演示视频或交互式时间线</p>
+             <p>{t.home.demoPlaceholder}</p>
           </div>
         </motion.div>
       </section>
@@ -55,18 +64,18 @@ export default function Home() {
         <div className="max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-12">
           <FeatureCard 
             icon={<Calendar className="text-retro-orange" />}
-            title="自动时间线"
-            description="自动按时间、地点和主题整理您的照片库，生成精美的时间线。"
+            title={t.home.feature1Title}
+            description={t.home.feature1Desc}
           />
           <FeatureCard 
             icon={<Share2 className="text-retro-orange" />}
-            title="智能回顾"
-            description="每日推送“那年今日”或“某次旅行”的精彩回顾，让记忆不再落灰。"
+            title={t.home.feature2Title}
+            description={t.home.feature2Desc}
           />
           <FeatureCard 
             icon={<Shield className="text-retro-orange" />}
-            title="隐私第一"
-            description="所有处理均在本地完成，我们承诺绝不上传您的私人照片到服务器。"
+            title={t.home.feature3Title}
+            description={t.home.feature3Desc}
           />
         </div>
       </section>
@@ -76,9 +85,10 @@ export default function Home() {
         <div className="max-w-7xl w-full flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-xl font-bold text-retro-blue">Retroto</div>
           <div className="flex gap-6 text-sm text-zinc-500">
-            <Link href="/privacy" className="hover:underline">隐私政策</Link>
-            <Link href="/terms" className="hover:underline">服务条款</Link>
-            <span>© 2026 Retroto. All rights reserved.</span>
+            <Link href="/privacy" className="hover:underline">{t.common.privacy}</Link>
+            <Link href="/support" className="hover:underline">{t.common.support}</Link>
+            <Link href="/terms" className="hover:underline">{t.common.terms}</Link>
+            <span>{t.common.rights}</span>
           </div>
         </div>
       </footer>
